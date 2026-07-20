@@ -1,0 +1,37 @@
+{
+  "name": "inkling-open-weight-atlas",
+  "version": "1.0.0",
+  "description": "An interactive real-data 3D atlas of Thinking Machines Lab's Inkling open-weight checkpoint.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romil-bijarnia/inkling-open-weight-atlas.git"
+  },
+  "homepage": "https://github.com/romil-bijarnia/inkling-open-weight-atlas#readme",
+  "bugs": {
+    "url": "https://github.com/romil-bijarnia/inkling-open-weight-atlas/issues"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "build:embeddings": "python3 scripts/build_embedding_map.py",
+    "download:embeddings:full": "python3 scripts/download_full_embeddings.py",
+    "build:embeddings:full": "python3 scripts/build_full_embedding_atlas.py",
+    "build:semantic": "python3 scripts/build_semantic_atlas.py",
+    "verify:data": "python3 scripts/verify_data.py",
+    "verify:embeddings": "python3 scripts/verify_embeddings.py",
+    "verify:embeddings:full": "python3 scripts/verify_full_embeddings.py",
+    "verify:semantic": "python3 scripts/verify_semantic_atlas.py"
+  },
+  "dependencies": {
+    "three": "0.185.1"
+  },
+  "devDependencies": {
+    "vite": "8.1.5"
+  }
+}

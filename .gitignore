@@ -1,0 +1,48 @@
+# macOS and editor files
+.DS_Store
+.AppleDouble
+.LSOverride
+.vscode/
+.idea/
+*.swp
+*~
+
+# JavaScript build and dependency output
+node_modules/
+dist/
+.vite/
+
+# Python environments and caches
+.venv/
+.venv-*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local configuration and logs
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.log
+
+# Browser QA output
+.playwright-cli/
+output/
+test-results/
+playwright-report/
+
+# Large or resumable generated embedding payloads
+data/inkling-embedding-vectors-full.bin
+data/inkling-embedding-vectors-full.bin.partial
+data/.embedding-full-download/
+data/.inkling-embedding-*-stage.json
+
+# Local semantic-map build caches
+data/.semantic-*-cache.*
+data/.semantic-fuzzy-graph-cache.npz
+data/.semantic-umap-layout-cache.npy

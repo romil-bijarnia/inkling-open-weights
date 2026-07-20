@@ -1,0 +1,18 @@
+{
+  "source": {
+    "repository": "thinkingmachines/Inkling",
+    "commit": "86b4d430ab871652a707666b89203a866888c5e5",
+    "shard": "model-00044-of-00108.safetensors",
+    "url": "https://huggingface.co/thinkingmachines/Inkling/resolve/86b4d430ab871652a707666b89203a866888c5e5/model-00044-of-00108.safetensors",
+    "tensor": "model.llm.embed.weight",
+    "absoluteStart": 4476
+  },
+  "rows": 200058,
+  "dimensions": 6144,
+  "dtype": "BF16",
+  "rowBytes": 12288,
+  "bytes": 2458312704,
+  "sha256": "737a8112b62694bc978a3510a1156d8c5ac2d171c65d683b051245484c16b31f",
+  "sampleRowsChecked": 2048,
+  "excludedPaddingRows": 966
+}
