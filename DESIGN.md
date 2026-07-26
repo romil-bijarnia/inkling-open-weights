@@ -1,4 +1,4 @@
-# Inkling 3D Open-Weight Atlas — implementation contract
+# Inkling 3D Open Weights — implementation contract
 
 ## Approval and evidence
 
@@ -87,7 +87,7 @@
 
 | State | Entered by | Visual response | Exit/resume rule |
 | --- | --- | --- | --- |
-| overview | load/reset | full 66-layer atlas | select/search a layer or tensor |
+| overview | load/reset | full 66-layer view | select/search a layer or tensor |
 | preview | pointer hover | exact mark outline and compact tooltip | pointer leaves |
 | selected | click/tap/search | inspector pins and camera focuses | Escape, reset, or another selection |
 | tensor slice | inspector action | real numerical sample becomes a 3D surface | Back returns to selected layer |

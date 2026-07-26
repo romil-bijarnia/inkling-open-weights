@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the generated Inkling token-embedding atlas and exact BF16 rows."""
+"""Validate the generated Inkling token-embedding data and exact BF16 rows."""
 
 from __future__ import annotations
 
@@ -61,7 +61,7 @@ def main() -> None:
     checks.require(tensor["absoluteStart"] == ABSOLUTE_START, "Absolute tensor start mismatch")
     checks.require(tensor["tokenizerEntries"] == TOKENIZER_ENTRIES, "Tokenizer-entry count mismatch")
     checks.require(tensor["unmappedRows"] == VOCAB_ROWS - TOKENIZER_ENTRIES == 966, "Unmapped-row count mismatch")
-    checks.require(len(tokens) == EXPECTED_TOKENS, "Token atlas count mismatch")
+    checks.require(len(tokens) == EXPECTED_TOKENS, "Token embedding count mismatch")
     checks.require(selection["mappedTokens"] == EXPECTED_TOKENS, "Selection count mismatch")
     checks.require(selection["totalTokenizerEntries"] == TOKENIZER_ENTRIES, "Selection denominator mismatch")
     checks.require(len(binary) == EXPECTED_TOKENS * ROW_BYTES, "Embedding binary length mismatch")
@@ -71,7 +71,7 @@ def main() -> None:
     ids = [token["id"] for token in tokens]
     checks.require(ids == sorted(ids), "Token records must be sorted by token ID")
     checks.require(len(ids) == len(set(ids)), "Token IDs must be unique")
-    checks.require(all(0 <= token_id < TOKENIZER_ENTRIES for token_id in ids), "Atlas contains padding rows")
+    checks.require(all(0 <= token_id < TOKENIZER_ENTRIES for token_id in ids), "Embedding selection contains padding rows")
     checks.require(all(token["index"] == index for index, token in enumerate(tokens)), "Token indices are unstable")
     checks.require(set(selection["classes"]) == set(token["selectionClass"] for token in tokens), "Selection-class ledger mismatch")
     checks.require(sum(selection["classes"].values()) == EXPECTED_TOKENS, "Selection-class counts do not sum")

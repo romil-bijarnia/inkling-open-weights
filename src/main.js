@@ -77,8 +77,8 @@ const EMBEDDING_DIMENSIONS = 6144;
 const EMBEDDING_ROW_BYTES = EMBEDDING_DIMENSIONS * 2;
 const EXPECTED_TOKEN_COUNT = 200_058;
 const DEFAULT_NEIGHBORS_PER_TOKEN = 32;
-const LOCAL_SETUP_COMMANDS = `git clone https://github.com/romil-bijarnia/inkling-open-weight-atlas.git
-cd inkling-open-weight-atlas
+const LOCAL_SETUP_COMMANDS = `git clone https://github.com/romil-bijarnia/inkling-open-weights.git
+cd inkling-open-weights
 npm ci
 npm run dev
 
@@ -456,7 +456,7 @@ function createWireBox(color, opacity) {
 function onContextLost(event) {
   event.preventDefault();
   state.renderActive = false;
-  showFallback("The WebGL context was lost. Reload the page to rebuild the 3D atlas.");
+  showFallback("The WebGL context was lost. Reload the page to rebuild the 3D visualization.");
 }
 
 function resizeRenderer() {
@@ -2180,7 +2180,7 @@ async function fetchEmbeddingVector(token) {
     try {
       rowBuffer = await fetchBinaryRange(EMBEDDING_VECTOR_URL, tokenId * EMBEDDING_ROW_BYTES, EMBEDDING_ROW_BYTES);
     } catch (error) {
-      throw new Error("The optional 2.46 GB full-vector payload is not installed. Run `npm run download:embeddings:full`, then reload the atlas.", { cause: error });
+      throw new Error("The optional 2.46 GB full-vector payload is not installed. Run `npm run download:embeddings:full`, then reload the visualization.", { cause: error });
     }
     const source = new DataView(rowBuffer);
     const scratch = new DataView(new ArrayBuffer(4));
@@ -2879,7 +2879,7 @@ function exportPNG() {
   const link = document.createElement("a");
   renderer.render(scene, camera);
   const focus = state.mode === "embeddings" && state.selectedToken ? `token-${tokenIdentifier(state.selectedToken)}` : `layer-${state.selectedLayer}`;
-  link.download = `inkling-weight-atlas-${state.mode}-${focus}.png`;
+  link.download = `inkling-open-weights-${state.mode}-${focus}.png`;
   link.href = renderer.domElement.toDataURL("image/png");
   link.click();
 }
@@ -3097,7 +3097,7 @@ async function boot() {
     requestAnimationFrame(animate);
   } catch (error) {
     console.error(error);
-    showFallback(error instanceof Error ? error.message : "The 3D atlas could not start.");
+    showFallback(error instanceof Error ? error.message : "The 3D visualization could not start.");
   }
 }
 

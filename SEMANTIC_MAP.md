@@ -1,6 +1,6 @@
-# Inkling Semantic Atlas data
+# Inkling Semantic Map data
 
-The semantic atlas is a second, relationship-first view of all 200,058 input
+The semantic map is a second, relationship-first view of all 200,058 input
 tokens. It does not replace the existing PCA galaxy. The galaxy shows the
 global shape of the 6,144-dimensional embedding matrix; this map instead tries
 to keep tokens with strong measured neighbour relationships near one another.
@@ -50,7 +50,7 @@ Dependencies are isolated in `.venv-semantic`. Rebuild from the exact neighbour
 files with:
 
 ```bash
-.venv-semantic/bin/python scripts/build_semantic_atlas.py
+.venv-semantic/bin/python scripts/build_semantic_map.py
 ```
 
 Hidden graph and UMAP caches can be reused during UI iteration with
@@ -58,7 +58,7 @@ Hidden graph and UMAP caches can be reused during UI iteration with
 only NumPy and runs with:
 
 ```bash
-.venv-semantic/bin/python scripts/verify_semantic_atlas.py
+.venv-semantic/bin/python scripts/verify_semantic_map.py
 ```
 
 The generated manifest records the measured runtime, platform, library

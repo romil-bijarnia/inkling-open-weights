@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a complete 2D meaning map from Inkling's exact neighbour graph.
+"""Build the complete 2D meaning map from Inkling's exact neighbour graph.
 
 The input graph already contains the exhaustive top-32 cosine neighbours for
 every tokenizer entry.  This script converts those measured relationships into

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the complete 200,058-token Inkling embedding atlas.
+"""Build the complete 200,058-token Inkling embedding map.
 
 Every tokenizer entry is represented. The builder expands the published BF16
 rows exactly to FP32, computes a full-vocabulary PCA layout, and exhaustively

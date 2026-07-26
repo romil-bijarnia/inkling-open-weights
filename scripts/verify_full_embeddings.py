@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the complete Inkling tokenizer-embedding atlas."""
+"""Validate the complete Inkling tokenizer-embedding data."""
 
 from __future__ import annotations
 

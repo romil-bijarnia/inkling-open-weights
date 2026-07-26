@@ -1,7 +1,7 @@
 {
-  "name": "inkling-open-weight-atlas",
+  "name": "inkling-open-weights",
   "version": "1.0.0",
-  "description": "An interactive real-data 3D atlas of Thinking Machines Lab's Inkling open-weight checkpoint.",
+  "description": "An interactive real-data 3D visualization of Thinking Machines Lab's Inkling open-weight checkpoint.",
   "private": true,
   "type": "module",
   "engines": {
@@ -9,11 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/romil-bijarnia/inkling-open-weight-atlas.git"
+    "url": "git+https://github.com/romil-bijarnia/inkling-open-weights.git"
   },
-  "homepage": "https://github.com/romil-bijarnia/inkling-open-weight-atlas#readme",
+  "homepage": "https://github.com/romil-bijarnia/inkling-open-weights#readme",
   "bugs": {
-    "url": "https://github.com/romil-bijarnia/inkling-open-weight-atlas/issues"
+    "url": "https://github.com/romil-bijarnia/inkling-open-weights/issues"
   },
   "scripts": {
     "dev": "vite --host 127.0.0.1",
@@ -21,12 +21,12 @@
     "preview": "vite preview --host 127.0.0.1",
     "build:embeddings": "python3 scripts/build_embedding_map.py",
     "download:embeddings:full": "python3 scripts/download_full_embeddings.py",
-    "build:embeddings:full": "python3 scripts/build_full_embedding_atlas.py",
-    "build:semantic": "python3 scripts/build_semantic_atlas.py",
+    "build:embeddings:full": "python3 scripts/build_full_embedding_map.py",
+    "build:semantic": "python3 scripts/build_semantic_map.py",
     "verify:data": "python3 scripts/verify_data.py",
     "verify:embeddings": "python3 scripts/verify_embeddings.py",
     "verify:embeddings:full": "python3 scripts/verify_full_embeddings.py",
-    "verify:semantic": "python3 scripts/verify_semantic_atlas.py"
+    "verify:semantic": "python3 scripts/verify_semantic_map.py"
   },
   "dependencies": {
     "three": "0.185.1"

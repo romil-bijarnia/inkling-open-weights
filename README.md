@@ -1,14 +1,14 @@
-# Inkling 3D Open-Weight Atlas
+# Inkling 3D Open Weights
 
-Inkling 3D Open-Weight Atlas is an interactive, real-data visualization of Thinking Machines Lab's published Inkling checkpoint. It maps the model's 66 decoder layers, 1,552 named tensors, routed and shared experts, exact sampled weight values, and the complete 200,058-entry tokenizer vocabulary into a searchable Three.js scene.
+Inkling 3D Open Weights is an interactive, real-data visualization of Thinking Machines Lab's published Inkling checkpoint. It maps the model's 66 decoder layers, 1,552 named tensors, routed and shared experts, exact sampled weight values, and the complete 200,058-entry tokenizer vocabulary into a searchable Three.js scene.
 
 This is not a generated picture of a neural network. Architecture positions come from the published module and tensor structure. Every point in the Embeddings view represents one real learned input row from `model.llm.embed.weight`, and every selected-token relationship is an exact cosine comparison in the original 6,144-dimensional space.
 
-## What the atlas shows
+## What the visualization shows
 
 The **Architecture** view maps the complete decoder stack and all named checkpoint tensors. Search and inspection expose each tensor's name, shape, dtype, scalar count, byte count, source shard, and architectural role.
 
-The **Experts** view opens a sparse layer's 256 routed experts and two shared experts. Gate-bias values control the displayed expert heights, but the atlas does not pretend those values alone reveal a token's runtime route.
+The **Experts** view opens a sparse layer's 256 routed experts and two shared experts. Gate-bias values control the displayed expert heights, but the visualization does not imply those values alone reveal a token's runtime route.
 
 The **Embeddings** view includes all 200,058 tokenizer-backed rows. The cloud is a three-dimensional PCA projection for navigation; its 32 selected-token spokes come from exhaustive cosine comparisons against the entire vocabulary in the original 6,144-dimensional vectors. Token pieces such as `king` and `␠king` remain separate because they are different tokenizer entries.
 
@@ -21,8 +21,8 @@ The checked-in data is sufficient for the complete all-token cloud, full-vocabul
 Prerequisites are Git, a current WebGL-capable browser, and Node.js `^20.19.0` or `>=22.12.0`.
 
 ```sh
-git clone https://github.com/romil-bijarnia/inkling-open-weight-atlas.git
-cd inkling-open-weight-atlas
+git clone https://github.com/romil-bijarnia/inkling-open-weights.git
+cd inkling-open-weights
 npm ci
 npm run dev
 ```
@@ -40,11 +40,11 @@ npm run verify:embeddings:full
 
 The downloader reads only the tokenizer-backed range of `model.llm.embed.weight` from the pinned Hugging Face shard. It is resumable, verifies known rows against the committed sample, and records a SHA-256 manifest. Allow about 3 GB of free disk space for the download. A production build made after the download can require roughly another 2.5 GB because Vite copies the payload into `dist/`.
 
-If the payload is absent, the main atlas and exact token-neighbour relationships continue to work. The app identifies the optional download command when a raw per-dimension view is requested.
+If the payload is absent, the main visualization and exact token-neighbour relationships continue to work. The app identifies the optional download command when a raw per-dimension view is requested.
 
 ## Reproducible Python environment
 
-Python is needed only to refresh, rebuild, or verify the derived checkpoint data. The repository includes a strict `requirements.txt` matching the versions used for the current atlas. Python 3.13 is recommended.
+Python is needed only to refresh, rebuild, or verify the derived checkpoint data. The repository includes a strict `requirements.txt` matching the versions used for the current data build. Python 3.13 is recommended.
 
 On macOS or Linux:
 
@@ -88,7 +88,7 @@ npm run build
 npm run preview
 ```
 
-The generated `dist/` directory is a static site. Any ordinary local HTTP server can host it; opening `index.html` directly through `file://` will not work because the atlas loads binary ranges and JSON assets over HTTP. For example:
+The generated `dist/` directory is a static site. Any ordinary local HTTP server can host it; opening `index.html` directly through `file://` will not work because the app loads binary ranges and JSON assets over HTTP. For example:
 
 ```sh
 python -m http.server 4173 --directory dist
@@ -105,7 +105,7 @@ python scripts/fetch_inkling_metadata.py
 npm run verify:data
 ```
 
-To reproduce the compact sample atlas, run:
+To reproduce the compact embedding sample, run:
 
 ```sh
 npm run build:embeddings
@@ -125,10 +125,10 @@ The complete rebuild expands approximately 1.23 billion BF16 values and performs
 ## Repository layout
 
 ```text
-data/                  Published metadata and browser-ready atlas products
+data/                  Published metadata and browser-ready visualization data
 scripts/               Download, build, and verification pipelines
 src/main.js            Three.js scene, interaction, search, and inspectors
-src/styles.css         Responsive atlas and project-menu styling
+src/styles.css         Responsive visualization and project-menu styling
 index.html             Application shell
 requirements.txt       Exact Python data-tool dependencies
 vite.config.js         Local development and static build configuration
@@ -146,4 +146,4 @@ The 3D embedding positions are a PCA projection and therefore cannot preserve ev
 
 ## License
 
-The atlas source code is released under the [Apache License 2.0](LICENSE). The upstream Inkling checkpoint remains subject to its own published license and attribution.
+The project source code is released under the [Apache License 2.0](LICENSE). The upstream Inkling checkpoint remains subject to its own published license and attribution.

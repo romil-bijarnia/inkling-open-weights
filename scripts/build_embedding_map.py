@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Build a compact, exact token-embedding atlas for Inkling.
+"""Build a compact, exact token-embedding map for Inkling.
 
 The full input embedding tensor is 2.47 GB. This builder selects a deterministic,
-readable 2,048-token atlas, range-reads the complete 6,144-value BF16 row for
+readable 2,048-token sample, range-reads the complete 6,144-value BF16 row for
 every selected token, and derives PCA positions and exact cosine neighbours.
 """
 
@@ -37,7 +37,7 @@ SHARD_URL = f"{HF_ROOT}/{REPO}/resolve/{COMMIT}/{SHARD}"
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 MAP_PATH = PROJECT_ROOT / "data" / "inkling-embedding-map.json"
 VECTOR_PATH = PROJECT_ROOT / "data" / "inkling-embedding-vectors.bin"
-USER_AGENT = "InklingEmbeddingAtlas/1.0"
+USER_AGENT = "InklingEmbeddingMap/1.0"
 
 TENSOR_NAME = "model.llm.embed.weight"
 VOCAB_ROWS = 201_024
@@ -588,10 +588,10 @@ def main() -> None:
             "seed": SEED,
             "classes": dict(sorted(selection_counts.items())),
             "method": (
-                "Representative atlas: common complete tokens, vocabulary-rank strata, multilingual tokens, "
+                "Representative embedding sample: common complete tokens, vocabulary-rank strata, multilingual tokens, "
                 "semantic relation probes, numeric/code/symbol tokens, and 18 active control tokens."
             ),
-            "neighbourScope": "Nearest neighbours are exact within the displayed 2,048-token atlas, not the full vocabulary.",
+            "neighbourScope": "Nearest neighbours are exact within the displayed 2,048-token sample, not the full vocabulary.",
         },
         "projection": {
             "method": "Deterministic randomized PCA of L2-normalized raw embedding rows",

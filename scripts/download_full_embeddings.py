@@ -4,7 +4,7 @@
 The source safetensors shard is roughly 13 GB, but the tokenizer-backed prefix
 of ``model.llm.embed.weight`` is a contiguous 2.46 GB payload. This script
 downloads only those 200,058 rows, keeps row order equal to token ID, verifies
-the existing 2,048-row atlas against the completed file, and records a SHA-256.
+the existing 2,048-row sample against the completed file, and records a SHA-256.
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ ABSOLUTE_START = 4_476
 ROWS_PER_CHUNK = 2_048
 WORKERS = 8
 EXPECTED_BYTES = TOKENIZER_ENTRIES * ROW_BYTES
-USER_AGENT = "InklingFullEmbeddingAtlas/1.0"
+USER_AGENT = "InklingFullEmbeddingMap/1.0"
 
 
 def fetch_range(start: int, end: int, retries: int = 6) -> bytes:

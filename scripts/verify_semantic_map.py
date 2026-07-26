@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify completeness and internal consistency of the semantic atlas files."""
+"""Verify completeness and internal consistency of the semantic-map files."""
 
 from __future__ import annotations
 

@@ -1,4 +1,4 @@
-# Exact versions used to build and verify the checked-in atlas data.
+# Exact versions used to build and verify the checked-in visualization data.
 # Python 3.13 is recommended.
 numpy==2.4.6
 torch==2.12.0
