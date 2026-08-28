@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#04080b" />
+    <meta
+      name="description"
+      content="Whole-model anatomy, exact checkpoint weight microscopy, and live functional imaging for open-weight transformers."
+    />
+    <title>Neural Atlas — Model MRI</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="identity">
+          <span class="eyebrow">OPEN-WEIGHT COMPUTATIONAL IMAGING</span>
+          <div class="title-row">
+            <h1>NEURAL ATLAS</h1>
+            <span class="version">V0.1</span>
+          </div>
+          <div class="runtime-line">
+            <i id="runtime-dot" aria-hidden="true"></i>
+            <span id="runtime-status">Connecting to the local observatory</span>
+          </div>
+        </div>
+
+        <nav class="mode-switch" aria-label="Atlas view">
+          <button class="mode-button is-active" type="button" data-mode="anatomy">Anatomy</button>
+          <button class="mode-button" type="button" data-mode="weights">Weights</button>
+          <button class="mode-button" type="button" data-mode="trace">Live trace</button>
+        </nav>
+
+        <div class="top-actions">
+          <button class="secondary-button" id="index-model" type="button">Index weights</button>
+          <button class="primary-button" id="load-model" type="button">Load model</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="visual-stage" aria-label="Interactive model observatory">
+          <canvas id="model-canvas" aria-label="Three-dimensional transformer anatomy"></canvas>
+
+          <section id="weight-workspace" class="weight-workspace" hidden aria-label="Exact tensor heatmap">
+            <header class="weight-toolbar">
+              <div>
+                <span class="section-kicker">EXACT CHECKPOINT REGION</span>
+                <strong id="weight-title">Select a tensor</strong>
+              </div>
+              <div class="weight-toolbar-actions">
+                <span id="weight-region">—</span>
+                <button id="weight-zoom-out" class="ghost-button" type="button" disabled>Zoom out</button>
+                <button id="weight-reset" class="ghost-button" type="button" disabled>Full tensor</button>
+              </div>
+            </header>
+            <div class="heatmap-shell">
+              <canvas id="weight-canvas" aria-label="Multiresolution tensor heatmap"></canvas>
+              <div class="heatmap-scale" aria-hidden="true">
+                <span>negative</span><i></i><span>positive</span>
+              </div>
+              <div id="weight-hover" class="weight-hover" hidden></div>
+            </div>
+            <p class="stage-note" id="weight-note">
+              Low-zoom cells are exact population summaries. Zoom until one cell equals one stored scalar.
+            </p>
+          </section>
+
+          <div class="anatomy-hud" id="anatomy-hud">
+            <div class="hud-card">
+              <span>SPECIMEN</span>
+              <strong id="hud-model">Pythia 70M</strong>
+            </div>
+            <div class="hud-card">
+              <span>LAYERS</span>
+              <strong id="hud-layers">6</strong>
+            </div>
+            <div class="hud-card">
+              <span>PARAMETERS</span>
+              <strong id="hud-parameters">70M</strong>
+            </div>
+            <div class="hud-card">
+              <span>SELECTED</span>
+              <strong id="hud-selected">Layer 0</strong>
+            </div>
+          </div>
+
+          <div class="scene-legend" id="scene-legend" aria-label="Anatomy legend">
+            <span><i style="--legend:#72a5ff"></i>Attention</span>
+            <span><i style="--legend:#bb7cff"></i>MLP</span>
+            <span><i style="--legend:#66d9b3"></i>Residual</span>
+            <span><i style="--legend:#f0c56a"></i>Live activity</span>
+          </div>
+
+          <div class="scene-instructions" id="scene-instructions">
+            <span>Drag to orbit</span>
+            <span>Wheel or pinch to zoom</span>
+            <span>Click a layer or module</span>
+          </div>
+
+          <section class="timeline" id="timeline" hidden aria-label="Generation timeline">
+            <div class="timeline-head">
+              <span class="section-kicker">TOKEN-BY-TOKEN FORWARD PASS</span>
+              <strong id="timeline-label">No trace recorded</strong>
+            </div>
+            <input id="timeline-slider" type="range" min="0" max="0" value="0" step="1" aria-label="Selected generation step" />
+            <div class="token-strip" id="token-strip"></div>
+          </section>
+
+          <div class="stage-loading" id="stage-loading" hidden role="status">
+            <div class="scan-mark" aria-hidden="true"></div>
+            <strong id="loading-title">Preparing model</strong>
+            <span id="loading-detail">Reading checkpoint metadata</span>
+          </div>
+        </section>
+
+        <aside class="inspector" aria-label="Neural Atlas inspector">
+          <section class="inspector-panel is-active" id="anatomy-panel" data-panel="anatomy">
+            <header class="inspector-header">
+              <div>
+                <span class="section-kicker">MODEL ANATOMY</span>
+                <h2 id="anatomy-title">Transformer overview</h2>
+              </div>
+              <span class="measurement-badge">SCHEMATIC LAYOUT</span>
+            </header>
+            <div id="anatomy-content" class="inspector-content"></div>
+          </section>
+
+          <section class="inspector-panel" id="weights-panel" data-panel="weights">
+            <header class="inspector-header">
+              <div>
+                <span class="section-kicker">CHECKPOINT MICROSCOPY</span>
+                <h2>Every stored weight</h2>
+              </div>
+              <span class="measurement-badge exact">EXACT BYTES</span>
+            </header>
+            <div class="inspector-content">
+              <label class="field-label" for="tensor-search">Find a tensor</label>
+              <div class="search-field">
+                <input id="tensor-search" type="search" autocomplete="off" spellcheck="false" placeholder="Try mlp.dense_4h_to_h.weight" />
+                <kbd>/</kbd>
+              </div>
+              <div class="tensor-results" id="tensor-results"></div>
+              <div id="tensor-details" class="details-section"></div>
+              <div id="scalar-details" class="details-section"></div>
+            </div>
+          </section>
+
+          <section class="inspector-panel" id="trace-panel" data-panel="trace">
+            <header class="inspector-header">
+              <div>
+                <span class="section-kicker">FUNCTIONAL IMAGING</span>
+                <h2 id="trace-title">Awaiting a prompt</h2>
+              </div>
+              <span class="measurement-badge live">LIVE VALUES</span>
+            </header>
+            <div class="inspector-content">
+              <div class="trace-selector-row">
+                <label>
+                  <span>Generation step</span>
+                  <select id="step-select" disabled></select>
+                </label>
+                <label>
+                  <span>Layer</span>
+                  <select id="layer-select"></select>
+                </label>
+              </div>
+              <div id="trace-summary"></div>
+              <section class="trace-section">
+                <div class="section-heading"><strong>Attention</strong><span>selected high-weight edges</span></div>
+                <canvas id="attention-canvas" width="760" height="250" aria-label="Selected attention edges"></canvas>
+              </section>
+              <section class="trace-section">
+                <div class="section-heading"><strong>Strongest MLP neurons</strong><span>activation entering the output projection</span></div>
+                <div id="neuron-table" class="rank-table"></div>
+              </section>
+              <section class="trace-section">
+                <div class="section-heading"><strong>Layer logit lens</strong><span>decoded intermediate residual</span></div>
+                <div id="logit-lens" class="rank-table"></div>
+              </section>
+              <section class="trace-section contribution-section">
+                <div class="section-heading"><strong>Contribution microscope</strong><span>weight × activation</span></div>
+                <label class="field-label" for="output-index">MLP output channel</label>
+                <div class="inline-form">
+                  <input id="output-index" type="number" min="0" value="0" step="1" />
+                  <button id="inspect-contribution" class="secondary-button" type="button" disabled>Inspect</button>
+                </div>
+                <div id="contribution-results" class="rank-table"></div>
+              </section>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <form class="prompt-dock" id="prompt-form">
+        <div class="prompt-context">
+          <span class="section-kicker">ASK THE MODEL AND WATCH THE FORWARD PASS</span>
+          <span id="prompt-status">The backend records measured internals; no chain-of-thought text is fabricated.</span>
+        </div>
+        <textarea id="prompt-input" rows="2" placeholder="Why is the sky blue?" required></textarea>
+        <label class="compact-field">
+          <span>Tokens</span>
+          <input id="max-tokens" type="number" min="1" max="128" value="12" />
+        </label>
+        <button class="primary-button run-button" id="run-trace" type="submit">Run trace</button>
+      </form>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

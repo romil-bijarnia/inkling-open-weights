@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "neural-atlas"
+version = "0.1.0"
+description = "Whole-model anatomy, exact weight microscopy, and live functional imaging for open-weight transformers."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Romil Bijarnia" }]
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.32,<1",
+  "numpy>=2.0,<3",
+  "torch>=2.4,<3",
+  "transformers>=4.47,<5",
+  "safetensors>=0.5,<1",
+  "huggingface-hub>=0.27,<2",
+  "pydantic>=2.9,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "httpx>=0.28,<1",
+]
+
+[project.scripts]
+neural-atlas = "neural_atlas.app:run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["neural_atlas"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q"

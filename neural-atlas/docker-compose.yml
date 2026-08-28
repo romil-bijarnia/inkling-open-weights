@@ -1,0 +1,16 @@
+services:
+  neural-atlas:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      NEURAL_ATLAS_MODEL_ID: ${NEURAL_ATLAS_MODEL_ID:-EleutherAI/pythia-70m-deduped}
+      NEURAL_ATLAS_REVISION: ${NEURAL_ATLAS_REVISION:-main}
+      NEURAL_ATLAS_DEVICE: ${NEURAL_ATLAS_DEVICE:-cpu}
+      NEURAL_ATLAS_DTYPE: ${NEURAL_ATLAS_DTYPE:-float32}
+    volumes:
+      - huggingface-cache:/models/huggingface
+
+volumes:
+  huggingface-cache:
